@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="public/css/timeline.css">
+<div ng-include="'/app/views/header.html'"></div>
+<div ng-controller="searchCtr">  
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-3 col-md-3"></div>
+         <div class="col-lg-6 col-md-5">
+            <div class="well">
+               <h4><b>Search</b></h4><hr>
+               <div class="feed">
+                  <div class="alert alert-danger" ng-if="message">
+                     <i>{{message}}</i>
+                  </div>
+                  <div class="micropost" ng-repeat="item in resultSearch">
+                     <div class="content" >
+                        <div class="avatar-content">
+                           <img src="{{item.personal_img}}" alt="img/avatar.png">
+                        </div>
+                        <div class="post-content">
+                           <div style="display: inline;">
+                              <span class="nameSearch"><a href="/#/page/{{item._id}}" class="name">{{item.firstname}} {{item.lastname}}</a></span><br>
+                              <span class="username">{{item.username}}</span><br>                  
+                           </div>
+                           <div style="display: inline; margin-left: 45%%">
+                              <span class="username">{{item.birthday.day}}/{{item.birthday.month}}/{{item.birthday.year}}</span>
+                              <span class="username">{{item.gender}}</span>
+                              <span class="time">{{item.created_at | PassToNow: true}}</span>
+                           </div>
+                        </div>  
+                     </div>  
+                     <hr>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-md-4"></div>
+   </div>
+</div>

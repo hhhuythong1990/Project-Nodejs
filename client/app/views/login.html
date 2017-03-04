@@ -1,0 +1,52 @@
+<div >
+   <nav class="navbar navbar-default navbar-inverse" role="navigation">
+      <div class="container">
+         <div class="navbar-header">
+            <a class="navbar-brand" href="/">{{APP_NAME}}</a>
+         </div>
+      </div>
+   </nav>
+   <br><br>
+   <div id="login" ng-controller="loginCtr">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+               <div class="well">
+                  <h3 class="text-center">Login</h3><hr>
+                  <div class="alert alert-danger" ng-if="message">
+                     <i>{{message}}</i>
+                  </div>
+                  <form name="loginForm" ng-submit="login(loginForm.$valid)" novalidate>
+                     <div class="form-group" ng-class="{'has-error':loginForm.username.$invalid && (loginForm.username.$dirty || submitted)}">
+                        <div class="has-feedback">
+                           <input type="email" class="form-control" ng-model="user.username" name="username" placeholder="Username" required autofocus>
+                           <i class="fa fa-check form-control-feedback" style="color:green" ng-show="loginForm.username.$dirty && loginForm.username.$valid"></i>
+                        </div>
+                        <i class="help-block small" ng-show="loginForm.username.$error.required && (loginForm.username.$dirty || submitted)">Username is required.</i>
+                        <i class="help-block small" ng-show="!loginForm.username.$error.required && loginForm.username.$error.email && (loginForm.username.$dirty || submitted)">Invalid email</i>
+                     </div>
+                     <div class="form-group" ng-class="{'has-error':loginForm.password.$invalid && (loginForm.password.$dirty || submitted)}">
+                        <div class="has-feedback">
+                           <input type="password" class="form-control" ng-model="user.password" name="password" placeholder="Password" required>
+                           <i class="fa fa-check form-control-feedback" style="color:green" ng-show="loginForm.password.$dirty && loginForm.password.$valid"></i>
+                        </div>
+                        <i class="help-block small" ng-show="loginForm.password.$error.required && (loginForm.password.$dirty || submitted)">Password is required.</i>
+                     </div>
+                     <div class="checkbox" ng-init="cb_remember={};cb_remember.selected=false">
+                        <label>
+                           <input ng-model="cb_remember.selected" type="checkbox"> Remember me
+                        </label>
+                     </div>
+                     <button type="submit" class="btn btn-success btn-block" ng-click="submitted=true">Login</button>
+                  </form>
+               </div>
+               <div class="row">
+                  <h5 class="text-center"><a href="/#/register">Create a account &#8594;</a></h5>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+

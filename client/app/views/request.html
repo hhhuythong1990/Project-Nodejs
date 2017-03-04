@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="public/css/timeline.css">
+<div ng-include="'/app/views/header.html'"></div>
+<div ng-controller="requestCtr">  
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-3 col-md-3"></div>
+         <div class="col-lg-6 col-md-5">
+            <div class="well">
+               <h4><b>Request make friend</b></h4><hr>
+               <div class="feed">
+                  <div class="micropost" ng-repeat="request in requestUser">
+                     <div class="content" >
+                        <div class="avatar-content">
+                           <img src="{{request.userid.personal_img}}" alt="img/avatar.png">
+                        </div>
+                        <div class="post-content">
+                           <div style="display: inline;">
+                              <span class="name"><a href="/#/page/{{request.userid._id}}">{{request.userid.firstname}} {{request.userid.lastname}}</a></span><br>
+                              <span class="username">{{request.userid.username}}</span><br>                  
+                           </div>
+                           <div style="display: inline; margin-left: 45%%">
+                              <span class="username">{{request.userid.birthday.day}}/{{request.userid.birthday.month}}/{{request.userid.birthday.year}}</span>
+                              <span class="username">{{request.userid.gender}}</span>
+                              <span class="time">{{request.request_at | PassToNow: true}}</span>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="btn_request">
+                        <button class="btn btn-success" ng-controller="friendCtr" ng-click="acceptRequest(request._id, request.userid._id ,request.requestid)">Accept</button>
+                        <button class="btn btn-success" ng-click="cancelRequest(request._id)">Cancel</button>
+                     </div>  
+                     <hr>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-md-4"></div>
+   </div>
+</div>

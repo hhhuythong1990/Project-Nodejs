@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="public/css/timeline.css">
+<div ng-include="'/app/views/header.html'"></div>
+<div ng-controller="friendCtr">  
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-3 col-md-3"></div>
+         <div class="col-lg-6 col-md-5">
+            <div class="well">
+               <h4><b>Friends</b></h4><hr>
+               <div class="feed">
+                  <div class="micropost" ng-repeat="friend in listFriend">
+                     <div class="content" >
+                        <div class="avatar-content">
+                           <img src="{{friend.acceptid.personal_img}}" alt="img/avatar.png">
+                        </div>
+                        <div class="post-content">
+                           <div style="display: inline;">
+                              <span class="name"><a href="/#/page/{{friend.acceptid._id}}">{{friend.acceptid.firstname}} {{friend.acceptid.lastname}}</a></span><br>
+                              <span class="username">{{friend.acceptid.username}}</span><br>                  
+                           </div>
+                           <div style="display: inline; margin-left: 45%%">
+                              <span class="username">{{friend.acceptid.birthday.day}}/{{friend.acceptid.birthday.month}}/{{friend.acceptid.birthday.year}}</span>
+                              <span class="username">{{friend.acceptid.gender}}</span>
+                              <span class="time">{{friend.friend_at | PassToNow: true}}</span>
+                           </div>
+                        </div>  
+
+                     </div>
+                     <div class="btn_unfriend">
+                        <button class="btn btn-success" ng-click="cancelFriend(friend.userid,friend.acceptid._id)">Unfriend</button>
+                     </div>  
+                     <hr>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-md-4"></div>
+   </div>
+</div>

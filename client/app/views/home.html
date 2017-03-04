@@ -1,0 +1,117 @@
+<link rel="stylesheet" href="public/css/timeline.css">
+<div ng-include="'/app/views/header.html'"></div>
+<div ng-controller="homeCtr">  
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-3 col-md-3">
+            <div class="card">
+               <div class="cover" style="position: relative; z-index: 0; background: none;">            
+                  <img src="{{userInfo.personal_img}}" alt="" class="avatar">
+                  <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 150px; width: 261px; z-index: -999998; position: absolute;"><img src="{{userInfo.pager_img}}" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 261px; height: 173.239px; max-height: none; max-width: none; z-index: -999999; left: 0px; top: -11.6194px;">
+                  </div>
+               </div>
+               <div class="about">
+                  <a href="/#/person"><h3 class="name">{{userInfo.firstname}} {{userInfo.lastname}}</h3></a>
+                  <h5 class="username">{{userInfo.username}}</h5>
+                  <h5 class="username">{{userInfo.birthday.day}}/{{userInfo.birthday.month}}/{{userInfo.birthday.year}}</h5>
+                  <h5 class="username">{{userInfo.gender}}</h5>
+                  <label id="location"><i class="fa fa-clock-o"></i> Join {{userInfo.joinin}}</label>
+               </div>
+               <div class="footer">
+                  <a href="/#/profile">Profile</a>
+                  <a href="/#/friend">Friends</a>
+                  <a href="/#/request">Request</a>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-6 col-md-5">
+            <div class="panel panel-default">
+               <div id="new-micropost" class="panel-body">
+                  <form role="form">
+                     <div class="form-group">
+                        <textarea rows="1" cols="10" ng-model="article.content" class="form-control" placeholder="What do you think?" style="overflow: hidden; word-wrap: break-word; height: 56px;"></textarea>
+                     </div>
+                     <button id="share" class="btn btn-success" ng-click="createActicle(userInfo._id)">
+                        <i class="fa fa-send-o"></i> <b>Post</b>
+                     </button>
+                  </form>
+               </div>
+            </div>
+            <div id="microposts" class="feed" ng-repeat="article in listArticle">
+               <div class="micropost" >
+                  <div class="content">
+                     <div class="avatar-content">
+                        <img src="{{article.userid.personal_img}}" alt="img/avatar.png">
+                     </div>
+                     <div class="post-content">
+                        <div style="display: inline;">
+                           <span class="name"><a href="/#/page/{{article.userid._id}}">{{article.userid.firstname}} {{article.userid.lastname}}</a></span><br>
+                           <span class="username">{{article.userid.username}}</span>
+                        </div>
+                        <div style="display: inline; margin-left: 45%%">
+                           <span class="time">{{article.created_at | PassToNow: true}}</span>
+                        </div>
+                        <div class="post">{{article.content}}</div>                  
+                     </div>
+                  </div>
+                  <div class="actions">
+                     <div class="actions-content" >
+                        <a href="" ng-switch on="article.liked">
+                           <i ng-switch-when="true" class="fa fa-heart" style="color: red" ng-click="clickLike(1,userInfo._id,article._id)"></i> 
+                           <i ng-switch-default class="fa fa-heart" ng-click="clickLike(0,userInfo._id,article._id)"></i>
+                        </a>
+                        <span class="like">{{article.count}}</span>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="write">
+                     <div class="actions-content">
+                        <input placeholder="Write comment..." class="form-control" ng-model="comment" type="text" ng-keypress="($event.which === 13)?addComment(userInfo._id,article._id,comment):0"/>
+                     </div>             
+                  </div>
+                  <div class="comment" ng-repeat="item in article.comments">
+                     <div class="content" >
+                        <div class="avatar-content">
+                           <img src="{{item.personal_img}}" alt="img/avatar.png">
+                        </div>
+                        <div class="post-content">
+                           <div style="display: inline;">
+                              <span class="name"><a href="/#/page/{{item.id}}">{{item.firstname}} {{item.lastname}}</a></span><br>
+                              <span class="username">{{item.username}}</span>
+                           </div>
+                           <div style="display: inline; margin-left: 4%">
+                              <span class="time">{{item.created_at | PassToNow: true}}</span>
+                           </div>
+                           <div class="post">{{item.content}}</div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3 col-md-4">
+            <div class="panel panel-default">
+               <div class="panel-heading">
+                  <h3 class="panel-title"><b>Online</b></h3>
+               </div>
+               <div class="panel-body">
+                  <ul id="suggestions" class="panel-list">
+                     <li ng-repeat="friendOnline in friendOnlines">
+                        <div class="row">
+                           <div class="col-lg-3 col-md-3 col-xs-2">
+                              <img src="{{friendOnline.personal_img}}" alt="" class="avatar">
+                           </div>
+                           <div class="col-lg-8 col-md-5 col-xs-3">
+                              <h5 class="username">{{friendOnline.firstname}} {{friendOnline.lastname}}</h5>
+                              <h5 class="username">{{friendOnline.username}}</h5>
+                           </div>
+                        </div>
+                        <hr>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

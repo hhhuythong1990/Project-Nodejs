@@ -1,0 +1,80 @@
+<link rel="stylesheet" href="public/css/timeline.css">
+<div ng-include="'/app/views/header.html'"></div>
+<div ng-controller="personCtr">  
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-3 col-md-3"></div>
+         <div class="col-lg-6 col-md-5">
+            <div class="well">               
+               <div class="page">
+                  <div class="cover" style="position: relative; z-index: 0; background: none;">            
+                     <img src="{{userInfo.personal_img}}" alt="" class="avatar">
+                     <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 200px; width: 560px; z-index: -999998; position: absolute;">
+                        <img src="{{userInfo.pager_img}}" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 550px; height: 173.239px; max-height: none; max-width: none; z-index: -999999; left: 0px; top: -11.6194px;">
+                     </div>
+                  </div>
+                  <div class="person">
+                     <h3 class="name nameColor">{{userInfo.firstname}} {{userInfo.lastname}}</h3>
+                     <h5 class="username">{{userInfo.username}}</h5>
+                     <h5 class="username">{{userInfo.birthday.day}}/{{userInfo.birthday.month}}/{{userInfo.birthday.year}}</h5>
+                     <h5 class="username">{{userInfo.gender}}</h5>
+                     <label id="location" class="ng-binding"><i class="fa fa-clock-o"></i> Join {{userInfo.joinin}}</label>
+                  </div>
+               </div>             
+            </div>
+            <div id="microposts" class="feed" ng-repeat="article in listArticle">
+               <div class="micropost">
+                  <div class="content">
+                     <div class="avatar-content">
+                        <img src="{{article.userid.personal_img}}" alt="img/avatar.png">
+                     </div>
+                     <div class="post-content">
+                        <div style="display: inline;">
+                           <span class="name">{{article.userid.firstname}} {{article.userid.lastname}}</span><br>
+                           <span class="username">{{article.userid.username}}</span>
+                        </div>
+                        <div style="display: inline; margin-left: 45%%">
+                           <span class="time">{{article.created_at | PassToNow: true}}</span>
+                        </div>
+                        <div class="post">{{article.content}}</div>                  
+                     </div>
+                  </div>
+                  <div class="actions">
+                     <div class="actions-content" >
+                        <a href="" ng-switch on="article.liked">
+                           <i ng-switch-when="true" class="fa fa-heart" style="color: red" ng-click="clickLike(1,userInfo._id,article._id)"></i> 
+                           <i ng-switch-default class="fa fa-heart" ng-click="clickLike(0,userInfo._id,article._id)"></i>
+                        </a>
+                        <span class="like">{{article.count}}</span>
+                     </div>
+                  </div>
+                  <hr>
+                  <div class="write">
+                     <div class="actions-content">
+                        <input placeholder="Write comment..." class="form-control" ng-model="comment" type="text" ng-keypress="($event.which === 13)?addComment(userInfo._id,article._id,comment):0"/>
+                     </div>             
+                  </div>
+                  <div class="comment" ng-repeat="item in article.comments">
+                     <div class="content">
+                        <div class="avatar-content">
+                           <img src="{{item.personal_img}}" alt="img/avatar.png">
+                        </div>
+                        <div class="post-content">
+                           <div style="display: inline;">
+                              <span class="name"><a href="/#/page/{{item.id}}">{{item.firstname}} {{item.lastname}}</a></span><br>
+                              <span class="username">{{item.username}}</span>
+                           </div>
+                           <div style="display: inline; margin-left: 4%">
+                              <span class="time">{{item.created_at | PassToNow: true}}</span>
+                           </div>
+                           <div class="post">{{item.content}}</div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-md-4"></div>
+   </div>        
+</div>

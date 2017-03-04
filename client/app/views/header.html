@@ -1,0 +1,66 @@
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+         <a id="logo" class="navbar-brand" href="#/home">{{APP_NAME}}</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         <ul class="nav navbar-nav navbar-right" ng-controller="requestCtr">
+            <li class="dropdown">
+               <a id="notification" href="" class="dropdown-toggle navbar-icons" data-toggle="dropdown" ng-click="loadRequest()">
+                  <ng-switch on="hasRequest">
+                  <i ng-switch-when="true" class="fa fa-bell-o" style="color: red"></i>
+                  <i ng-switch-when="false" class="fa fa-bell-o"></i>
+                  <i ng-switch-default class="fa fa-bell-o"></i>
+               </ng-switch>
+            </a>
+            <ul id="notifications" class="dropdown-menu" role="menu">
+               <li class="dropdown-title">
+                  <h5><b>Request make friend</b></h5>
+               </li>
+
+               <li ng-repeat="item in requestUser">
+                  <a>
+                     <span class="mention"><img src="{{item.userid.personal_img}}" class="avatar" alt=""></span> 
+                     <b>{{item.userid.firstname}} {{item.userid.lastname}}</b>
+                     <span class="link">
+                        <button class="btn btn-success btn-sm" ng-click="acceptRequest(item._id, item.userid._id ,item.requestid)">
+                           Accept 
+                        </button>
+                     </span>
+                     <span class="hashtags">
+                        <button class="btn btn-success btn-sm" ng-click="cancelRequest(item._id)">
+                           Cancel 
+                        </button>
+                     </span>
+                  </a>
+               </li>
+               <li>
+                  <a href="/#/request" class="text-center">
+                     <span><b><i class="fa fa-bars"></i> More</b></span>
+                  </a>
+               </li>
+            </ul>
+         </li>
+         <li class="dropdown" ng-controller="loginCtr">
+            <a id="" href="" class="dropdown-toggle navbar-icons" data-toggle="dropdown" ng-click="logout()">
+               <i class="fa fa-sign-out"></i>
+            </a>
+         </li>
+      </ul>
+      <div class="navbar-form navbar-right" role="search" ng-controller="searchCtr">
+         <div class="form-group" >
+            <div class="input-group">
+               <input type="text" ng-model="search.username" class="form-control" placeholder="Search"  ng-keypress="($event.which === 13)?searchFriend():0"/>
+               <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+</nav>

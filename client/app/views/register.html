@@ -1,0 +1,77 @@
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
+   <div class="container">
+      <div class="navbar-header">
+         <a class="navbar-brand" href="/">{{APP_NAME}}</a>
+      </div>
+   </div>
+</nav>
+<div ng-controller="regisCtr">
+   <div class="container" style="margin-top: 20px;">
+      <div class="row">
+         <div class="col-lg-4 col-lg-offset-4">
+            <div class="well">
+               <h4><b>Register</b></h4><hr>
+               <div class="alert alert-danger" ng-if="message">
+                  <i>{{message}}</i>
+               </div>
+               <form name="registerForm" ng-submit="register(registerForm.$valid)" novalidate>
+                  <div class="form-group" ng-class="{'has-error':registerForm.firstname.$invalid && (registerForm.firstname.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="text" class="form-control" ng-model="account.firstname" name="firstname" placeholder="First Name" required autofocus >
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="registerForm.firstname.$dirty && registerForm.firstname.$valid"></i>
+                     </div>              
+                     <i class="help-block small" ng-show="registerForm.firstname.$error.required && (registerForm.firstname.$dirty || submitted)">Your first name is required.</i>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error':registerForm.lastname.$invalid && (registerForm.lastname.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="text" class="form-control" ng-model="account.lastname" name="lastname" placeholder="Last Name" required>
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="registerForm.lastname.$dirty && registerForm.lastname.$valid"></i>
+                     </div>
+                     <i class="help-block small" ng-show="registerForm.lastname.$error.required && (registerForm.lastname.$dirty || submitted)">Your last name is required.</i>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error':registerForm.mail.$invalid && (registerForm.mail.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="email" class="form-control" ng-model="account.username" name="mail" placeholder="Username" required>
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="registerForm.mail.$dirty && registerForm.mail.$valid"></i>
+                     </div>
+                     <i class="help-block small" ng-show="registerForm.mail.$error.required && (registerForm.mail.$dirty || submitted)">Username is required.</i>
+                     <i class="help-block small" ng-show="!registerForm.mail.$error.required && registerForm.mail.$error.email && registerForm.mail.$dirty">Invalid email</i>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error':registerForm.password.$invalid && (registerForm.password.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="password" class="form-control" ng-model="account.password" name="password" placeholder="Password" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required>
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="registerForm.password.$dirty && registerForm.password.$valid"></i>
+                     </div>
+                     <i class="help-block small" ng-show="registerForm.password.$error.required && (registerForm.password.$dirty || submitted)">Password is required.</i>
+                     <i class="help-block small" ng-show="!registerForm.password.$error.required && registerForm.password.$error.pattern && registerForm.password.$dirty">Must contain one lower &amp; uppercase letter, and one non-alpha character</i>
+                  </div>
+                  <div class="form-group form-inline " ng-class="{'has-error':registerForm.day.$invalid && registerForm.month.$invalid && registerForm.year.$invalid && (registerForm.day.$dirty || submitted)}">
+                     <select class="form-control has-feedback" ng-model="account.birthday.day" name="day" ng-options="item for item in Days | limitTo:NumberOfDays" ng-change="UpdateNumberOfDays()" required>
+                        <option value="" >Day</option>
+                     </select>
+
+                     <select class="form-control" ng-model="account.birthday.month" name="month" ng-options="item for item in Months" ng-change="UpdateNumberOfDays()" required>
+                        <option value="" >Month</option>
+                     </select>
+
+                     <select class="form-control" ng-model="account.birthday.year" name="year" ng-options="item for item in Years" ng-change="UpdateNumberOfDays()" required>
+                        <option value="" >Year</option>
+                     </select>                     
+                     <i class="fa fa-check" style="color:green" ng-show="registerForm.day.$dirty && (registerForm.day.$valid && registerForm.month.$valid && registerForm.year.$valid)"></i>
+                     <i class="help-block small" ng-show="(registerForm.day.$error.required && registerForm.month.$error.required && registerForm.year.$error.required) && (registerForm.day.$dirty || submitted)">Birth day is required.</i>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error':registerForm.gender.$invalid && (registerForm.gender.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="radio" name="gender" ng-model="account.gender" value="male" required />Male &nbsp;&nbsp;
+                        <input type="radio" name="gender"  ng-model="account.gender" value="female" required />Female
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="registerForm.gender.$dirty && registerForm.gender.$valid"></i>
+                     </div>
+                     <i class="help-block small" ng-show="registerForm.gender.$error.required && (registerForm.gender.$dirty || submitted)">Select any gender.</i>
+                  </div>
+                  <button type="submit" class="btn btn-success btn-block" ng-click="submitted=true">Register</button>
+               </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

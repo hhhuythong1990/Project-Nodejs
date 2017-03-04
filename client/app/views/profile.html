@@ -1,0 +1,95 @@
+<link rel="stylesheet" href="public/css/timeline.css">
+<div ng-include="'/app/views/header.html'"></div>
+<div ng-controller="profileCtr">  
+   <div class="container">
+      <div class="row">
+         <div class="col-lg-3 col-md-3"></div>
+         <div class="col-lg-6 col-md-5">
+            <div class="well">
+               <h4><b>Profile</b></h4><hr>
+               
+                  <div class="profile">
+                     <div class="cover" style="position: relative; z-index: 0; background: none;">            
+                        <img src="{{userInfo.personal_img}}" alt="" class="avatar">
+                        <div class="backstretch" style="left: 0px; top: 0px; overflow: hidden; margin: 0px; padding: 0px; height: 200px; width: 560px; z-index: -999998; position: absolute;">
+                           <img src="{{userInfo.pager_img}}" style="position: absolute; margin: 0px; padding: 0px; border: none; width: 550px; height: 173.239px; max-height: none; max-width: none; z-index: -999999; left: 0px; top: -11.6194px;">
+                        </div>
+                     </div>
+                     <div class="about">
+                     </div>
+                  </div>                  
+                  <div class="footer">
+                     <div>
+                        <input type = "file" file-model = "myAvatar"/>
+                        <button class="btn btn-sm btn-success" ng-click="uploadAvatar()">Upload avatar</button>
+                     </div>
+                  </div>
+                  <div>
+                     <div class="alert alert-success" ng-if="message">
+                        <i>{{message}}</i>
+                     </div>
+                  </div>
+               <form name="updateForm" ng-submit="updateInfo(updateForm.$valid)" novalidate>
+                  <div class="form-group" ng-class="{'has-error':updateForm.firstname.$invalid && (updateForm.firstname.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="text" class="form-control" ng-model="userInfo.firstname" name="firstname" placeholder="First Name" required autofocus >
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="updateForm.firstname.$dirty && updateForm.firstname.$valid"></i>
+                     </div>              
+                     <i class="help-block small" ng-show="updateForm.firstname.$error.required && (updateForm.firstname.$dirty || submitted)">Your first name is required.</i>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error':updateForm.lastname.$invalid && (updateForm.lastname.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="text" class="form-control" ng-model="userInfo.lastname" name="lastname" placeholder="Last Name" required>
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="updateForm.lastname.$dirty && updateForm.lastname.$valid"></i>
+                     </div>
+                     <i class="help-block small" ng-show="updateForm.lastname.$error.required && (updateForm.lastname.$dirty || submitted)">Your last name is required.</i>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error':updateForm.mail.$invalid && (updateForm.mail.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="email" class="form-control" ng-model="userInfo.username" name="mail" placeholder="Username" required>
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="updateForm.mail.$dirty && updateForm.mail.$valid"></i>
+                     </div>
+                     <i class="help-block small" ng-show="updateForm.mail.$error.required && (updateForm.mail.$dirty || submitted)">Username is required.</i>
+                     <i class="help-block small" ng-show="!updateForm.mail.$error.required && updateForm.mail.$error.email && updateForm.mail.$dirty">Invalid email</i>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error':updateForm.password.$invalid && (updateForm.password.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="password" class="form-control" ng-model="userInfo.password" name="password" placeholder="Password" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required>
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="updateForm.password.$dirty && updateForm.password.$valid"></i>
+                     </div>
+                     <i class="help-block small" ng-show="updateForm.password.$error.required && (updateForm.password.$dirty || submitted)">Password is required.</i>
+                     <i class="help-block small" ng-show="!updateForm.password.$error.required && updateForm.password.$error.pattern && updateForm.password.$dirty">Must contain one lower &amp; uppercase letter, and one non-alpha character</i>
+                  </div>
+                  <div class="form-group form-inline " ng-class="{'has-error':updateForm.day.$invalid && updateForm.month.$invalid && updateForm.year.$invalid && (updateForm.day.$dirty || submitted)}">
+                     <select class="form-control has-feedback" ng-model="userInfo.birthday.day" name="day" ng-options="item for item in Days | limitTo:NumberOfDays" ng-change="UpdateNumberOfDays()" required>
+                        <option value="" >Day</option>
+                     </select>
+
+                     <select class="form-control" ng-selected="{{userInfo.birthday.month}}" ng-model="userInfo.birthday.month" name="month" ng-options="item for item in Months" ng-change="UpdateNumberOfDays()" required>
+                        <option value="" >Month</option>
+                     </select>
+
+                     <select class="form-control" ng-model="userInfo.birthday.year" name="year" ng-options="item for item in Years" ng-change="UpdateNumberOfDays()" required>
+                        <option value="" >Year</option>
+                     </select>                     
+                     <i class="fa fa-check" style="color:green" ng-show="updateForm.day.$dirty && (updateForm.day.$valid && updateForm.month.$valid && updateForm.year.$valid)"></i>
+                     <i class="help-block small" ng-show="(updateForm.day.$error.required && updateForm.month.$error.required && updateForm.year.$error.required) && (updateForm.day.$dirty || submitted)">Birth day is required.</i>
+                  </div>
+                  <div class="form-group" ng-class="{'has-error':updateForm.gender.$invalid && (updateForm.gender.$dirty || submitted)}">
+                     <div class="has-feedback">
+                        <input type="radio" name="gender" ng-model="userInfo.gender" value="male" required />Male &nbsp;&nbsp;
+                        <input type="radio" name="gender"  ng-model="userInfo.gender" value="female" required />Female
+                        <i class="fa fa-check form-control-feedback" style="color:green" ng-show="updateForm.gender.$dirty && updateForm.gender.$valid"></i>
+                     </div>
+                     <i class="help-block small" ng-show="updateForm.gender.$error.required && (updateForm.gender.$dirty || submitted)">Select any gender.</i>
+                  </div>
+                  <button type="submit" class="btn btn-success" ng-click="submitted=true">Update</button>
+               </form>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3 col-md-4"></div>
+   </div>
+</div>
+
+
